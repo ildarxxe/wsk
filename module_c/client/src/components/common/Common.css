@@ -1,0 +1,55 @@
+.header {
+    background: #1d1d1d;
+    height: 10vh;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+    font-size: 20px;
+    align-items: center;
+}
+
+.header__nav {
+    flex: 1;
+    display: flex;
+    justify-content: end;
+    gap: 1%;
+}
+
+.header__nav a {
+    color: white;
+    text-decoration: none;
+}
+
+.footer {
+    height: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #1d1d1d;
+    font-size: 20px;
+}
+
+.header__logo {
+    display: block;
+    cursor: pointer;
+    user-select: none;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 10vh;
+    background: #676767;
+    padding: 5px 0px;
+    height: 80vh;
+    transition: all 0.5s ease-in-out;
+    overflow: hidden;
+}
+
+.menu .menu__link {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    margin: 5px 10px;
+}
