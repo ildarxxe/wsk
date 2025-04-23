@@ -6,6 +6,7 @@ use App\Models\GenerationImage;
 use App\Services\RandomWords;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Random\RandomException;
 
 class GenerationImageController extends Controller
 {
@@ -20,13 +21,13 @@ class GenerationImageController extends Controller
         }
 
         $user_id = $req->user()->id;
-        $processes = GenerationImage::where('user_id', $user_id)->where('status', GenerationImage::STATUS_WAITING)->first();
+        $processes = GenerationImage::query()->where('user_id', $user_id)->where('status', GenerationImage::STATUS_WAITING)->first();
         if ($processes) {
             return response()->json(['status' => false, 'message' => 'Дождитесь текущей генерации изображения', 'current_job_id' => $processes->id], 403);
         }
 
         try {
-            $generation = GenerationImage::create([
+            $generation = GenerationImage::query()->create([
                 'user_id' => $user_id,
                 'image' => ''
             ]);
@@ -37,10 +38,13 @@ class GenerationImageController extends Controller
         return response()->json(['status' => true, 'current_job_id' => $generation->id, 'generate_status' => $generation->getStatusName()], 201);
     }
 
+    /**
+     * @throws RandomException
+     */
     public function getStatus(Request $req, $id): JsonResponse
     {
         $user_id = $req->user()->id;
-        $process = GenerationImage::find($id);
+        $process = GenerationImage::query()->find($id);
         if (!$process) {
             return response()->json(['status' => false, 'message' => 'process not found'], 404);
         }
@@ -48,21 +52,22 @@ class GenerationImageController extends Controller
             return response()->json(['status' => false, 'message' => 'Нет доступа'], 403);
         }
 
-        if (strlen($process->image) < GenerationImage::ANSWER_MAX_LENGTH) {
-            $process->image = $process->image . ' ' . RandomWords::generateRandomWords(random_int(1, 12));
+        if ($process->progress < GenerationImage::PROGRESS_COMPLETED) {
+            $process->progress = $process->progress + 10;
             $process->save();
-            return response()->json(['status' => true, 'generate_status' => $process->getStatusName(), 'progress' => $process->image, 'image_url' => ''], 200);
+            return response()->json(['status' => true, 'generate_status' => $process->getStatusName(), 'progress' => $process->progress, 'image_url' => $process->image], 200);
         } else {
             $process->status = GenerationImage::STATUS_SUCCESS;
+            $process->progress = GenerationImage::PROGRESS_COMPLETED;
             $process->save();
-            return response()->json(['status' => true, 'generate_status' => $process->getStatusName(), 'progress' => $process->image, 'image_url' => $process->image], 200);
+            return response()->json(['status' => true, 'generate_status' => $process->getStatusName(), 'progress' => $process->progress, 'image_url' => $process->image], 200);
         }
     }
 
     public function getResult(Request $req, $id): JsonResponse
     {
         $user_id = $req->user()->id;
-        $process = GenerationImage::find($id);
+        $process = GenerationImage::query()->find($id);
 
         if (!$process) {
             return response()->json(['status' => false, 'message' => 'process not found'], 404);

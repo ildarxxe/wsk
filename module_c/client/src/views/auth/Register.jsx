@@ -9,7 +9,7 @@ const Register = () => {
         submit_btn.onclick = (e) => {
             e.preventDefault();
             const form = document.forms[0];
-            fetch('http://127.0.0.1:8080/api/user/create', {
+            fetch('http://127.0.0.1:8000/api/user/create', {
                 method: 'POST',
                 headers: {
                     "content-type": "application/json",

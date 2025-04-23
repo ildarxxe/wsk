@@ -39,7 +39,7 @@ export const UseChatLogic = (api_url) => {
     const updateDialog = React.useCallback((id, updateAnswer) => {
         setDialog(prevDialog => prevDialog.map(item => {
             if (item.job_id === id) {
-                return { ...item, answer: updateAnswer };
+                return { ...item, answer: updateAnswer, query_count: item.query_count + 1 };
             }
             return item;
         }));
@@ -48,9 +48,9 @@ export const UseChatLogic = (api_url) => {
     const startPollingForAnswer = React.useCallback((jobId) => {
         const intervalId = setInterval(async () => {
             const answerRes = await getAnswer(jobId);
-            const answerText = isImageGeneration ? (answerRes?.progress ?? '') : (answerRes?.answer ?? '');
+            const answerText = isImageGeneration ? (answerRes?.image_url ?? '') : (answerRes?.answer ?? '');
             updateDialog(jobId, answerText);
-            if (answerRes?.status === false || (isImageGeneration && answerRes?.image_url !== "")) {
+            if (answerRes?.status === false || (isImageGeneration && answerRes?.progress === 100)) {
                 setSuccess(true);
                 clearInterval(intervalId);
                 setProcessGetAnswer(null);
@@ -76,6 +76,7 @@ export const UseChatLogic = (api_url) => {
                 job_id: newJobId,
                 message: newMessage,
                 answer: '',
+                query_count: 1,
             }]);
             setFirstMessage(false);
 

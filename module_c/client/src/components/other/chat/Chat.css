@@ -57,8 +57,9 @@
     padding: 10px;
     border-radius: 10px;
     border: 1px solid white;
-    max-width: 500px;
+    max-width: 900px;
     width: max-content;
+    margin: 10px 0;
 }
 
 .question {
@@ -68,6 +69,61 @@
 
 .chat__boxes {
     overflow: auto;
-    height: 50vh;
+    height: 65vh;
+    padding: 0 5px;
+}
+
+.chat__boxes::-webkit-scrollbar {
+    border: none;
+    outline: none;
+    background: none;
+}
+
+.generate_image {
+    width: 400px;
+}
+
+#image1 {
+    filter: blur(8px);
+}
+
+#image2 {
+    filter: blur(7px);
+}
+
+#image3 {
+    filter: blur(6px);
+}
+
+#image4 {
+    filter: blur(5px);
+}
+
+#image5 {
+    filter: blur(4px);
+}
+
+#image6 {
+    filter: blur(3px);
+}
+
+#image7 {
+    filter: blur(2px);
+}
+
+#image8 {
+    filter: blur(1px);
+}
+
+#image9 {
+    filter: blur(.5px);
+}
+
+#image10 {
+    filter: blur(0px);
+}
+
+table {
+    margin-top: 10px;
 }
 

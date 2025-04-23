@@ -5,9 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\RecognizeImage;
 use App\Services\RandomWords;
+use Random\RandomException;
 
 class RecognizeImageController extends Controller
 {
+    /**
+     * @throws RandomException
+     */
     public function recognize(Request $req)
     {
         $validate = $req->validate([
@@ -27,19 +31,23 @@ class RecognizeImageController extends Controller
                 'user_id' => $user_id
             ]);
         } catch (\Throwable $th) {
-            return response()->json(['status' => false, 'message' => 'БД легла']);
+            return response()->json(['status' => false, 'message' => $th]);
         }
 
-        $objects = [
-            'name' => RandomWords::generateRandomWords(1),
-            'probability' => mt_rand(0, mt_getrandmax()) / mt_getrandmax(),
-            'bounding_box' => [
-                'x' => random_int(0, 100),
-                'y' => random_int(0, 100),
-                'width' => random_int(0, 100),
-                'height' => random_int(0, 100)
-            ]
-        ];
+        $objects = [];
+        for ($i = 0; $i < random_int(2,6); $i++) {
+            $objects[] = [
+                'id' => $i + 1,
+                'name' => RandomWords::generateRandomWords(1),
+                'probability' => mt_rand(0, mt_getrandmax()) / mt_getrandmax(),
+                'bounding_box' => [
+                    'x' => random_int(0, 100),
+                    'y' => random_int(0, 100),
+                    'width' => random_int(0, 100),
+                    'height' => random_int(0, 100)
+                ]
+            ];
+        }
         $recognize->status = RecognizeImage::STATUS_SUCCESS;
         $recognize->save();
 

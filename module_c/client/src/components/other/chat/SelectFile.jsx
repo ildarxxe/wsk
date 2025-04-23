@@ -1,9 +1,9 @@
 import React from 'react';
 
-const SelectFile = () => {
+const SelectFile = ({selectFile}) => {
     return (
         <div className={'selectFile'}>
-            <input type="file" name="file" id="file" />
+            <input onChange={(e) => selectFile(e)} type="file" name="file" id="file" />
         </div>
     );
 };
