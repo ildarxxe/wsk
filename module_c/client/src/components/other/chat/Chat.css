@@ -6,7 +6,7 @@
 .chat-input {
     display: flex;
     gap: .5%;
-    height: 30px;
+    height: 40px;
     margin-top: 20px;
     width: 25%;
 }
@@ -19,6 +19,11 @@
     width: 100%;
     height: 100%;
     padding-left: 5px;
+}
+
+.input-box input:focus {
+    outline: none;
+    border: none;
 }
 
 .btn-box button {
@@ -45,6 +50,11 @@
     flex-direction: column;
     justify-content: center;
     width: 90%;
+    transition: all .5s ease-in-out;
+}
+
+.empty__dialog {
+    display: none;
 }
 
 .chat__box {

@@ -41,10 +41,11 @@
     position: absolute;
     top: 10vh;
     background: #676767;
-    padding: 5px 0px;
+    padding: 5px 0;
     height: 80vh;
     transition: all 0.5s ease-in-out;
     overflow: hidden;
+    z-index: 2;
 }
 
 .menu .menu__link {

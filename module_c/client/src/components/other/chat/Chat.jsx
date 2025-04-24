@@ -17,7 +17,7 @@ const Chat = ({welcome_text, request = 'message', api_url}) => {
                 <h1>{welcome_text}</h1>
             </div> : <h1 className={'chat__title'}>Ваш диалог</h1>}
 
-            <div className={'chat__inner'}>
+            <div className={`chat__inner ${emptyDialog ? 'empty__dialog' : ''}`}>
                 <div className={'chat__boxes'}>
                     {!isRecognized ? <>
                         {dialog.map((item, index) => (

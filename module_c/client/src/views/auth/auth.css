@@ -11,10 +11,11 @@
     width: 30%;
     background: #535353;
     box-shadow: 0 0 7px 1px #ffffff;
-    height: 35vh;
+    /*height: 35vh;*/
     padding: 10px;
     border-radius: 5px;
     margin-top: 10px;
+    min-height: max-content;
 }
 
 .form__inner {
@@ -36,15 +37,33 @@
 
 .form__block input {
     padding-left: 2px;
-    height: 7vh;
+    height: 4vh;
     border-radius: 5px;
     border: none;
+    min-height: 25px;
 }
 
-.password_visibility {
+/*.password_visibility {*/
+/*    border: none;*/
+/*    padding: 5px;*/
+/*    border-radius: 5px;*/
+/*    margin: 5px auto!important;*/
+/*    cursor: pointer;*/
+/*    width: max-content;*/
+/*}*/
+
+.auth__buttons {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+}
+
+.auth__buttons button {
+    margin: 5px auto;
     border: none;
     padding: 5px;
     border-radius: 5px;
-    margin: 5px 0;
     cursor: pointer;
+    width: max-content;
 }

@@ -51,6 +51,9 @@ export const UseChatLogic = (api_url) => {
             const answerText = isImageGeneration ? (answerRes?.image_url ?? '') : (answerRes?.answer ?? '');
             updateDialog(jobId, answerText);
             if (answerRes?.status === false || (isImageGeneration && answerRes?.progress === 100)) {
+                if (isImageGeneration) {
+                    await getAnswer(jobId);
+                }
                 setSuccess(true);
                 clearInterval(intervalId);
                 setProcessGetAnswer(null);
