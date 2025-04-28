@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 
 export const UseRecognize = () => {
     const [recSuccess, setRecSuccess] = useState(false);
@@ -28,14 +28,18 @@ export const UseRecognize = () => {
 
         const newDialog = {
             name: file_name,
-            objects: []
+            objects: [],
+            image: '',
+            size: {}
         }
         setRecDialog(prevState => [...prevState, newDialog]);
 
         const res = await fetchRecognize(e.target.files[0]);
-        if (res.objects) {
+        if (res.objects && res.img_path && res.size) {
             setRecDialog(prevState => prevState.map(item => {
-                return item.name === file_name ? { ...item, objects: res.objects } : item
+                const image = new window.Image();
+                image.src = res.img_path;
+                return item.name === file_name ? { ...item, objects: res.objects, image: image, size: res.size } : item
             }));
             setRecSuccess(true);
         }

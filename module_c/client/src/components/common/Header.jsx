@@ -2,12 +2,21 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import './Common.css'
 
+
 const Header = () => {
-    const isLogged = localStorage.getItem("token") !== null || '';
+    const isLogged= localStorage.getItem("token") !== null;
+
     function logout() {
         localStorage.removeItem("token");
         window.location.reload();
     }
+
+    React.useEffect(() => {
+        const logo = document.querySelector(".header__logo");
+        logo.onclick = () => {
+            document.querySelector('.menu').classList.toggle('hidden');
+        }
+    }, [])
     return (
         <header className={'header'}>
             <div className={'header__logo'}>
