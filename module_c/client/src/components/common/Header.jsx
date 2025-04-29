@@ -4,7 +4,7 @@ import './Common.css'
 
 
 const Header = () => {
-    const isLogged= localStorage.getItem("token") !== null;
+    const isLogged = localStorage.getItem("token") !== null;
 
     function logout() {
         localStorage.removeItem("token");
@@ -14,7 +14,10 @@ const Header = () => {
     React.useEffect(() => {
         const logo = document.querySelector(".header__logo");
         logo.onclick = () => {
-            document.querySelector('.menu').classList.toggle('hidden');
+            const menu = document.querySelector('.menu');
+            if (menu) {
+                menu.classList.toggle('hidden')
+            }
         }
     }, [])
     return (
